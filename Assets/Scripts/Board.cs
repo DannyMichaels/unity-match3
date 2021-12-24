@@ -8,11 +8,15 @@ public class Board : MonoBehaviour
 
   public GameObject bgTilePrefab;
 
-  public Gem[] gems;
+  public Gem[] gems; // the gem variants to randomly pick from when spawning the gems
+
+  // https://stackoverflow.com/questions/12567329/multidimensional-array-vs
+  public Gem[,] allGems; // stored gems data on the board (2D Array), stores an X and a Y value for each gem.
 
   // Start is called before the first frame update
   void Start()
   {
+    allGems = new Gem[width, height];
     Setup();
   }
 
@@ -42,8 +46,13 @@ public class Board : MonoBehaviour
   {
     Vector3 compatiblePos = new Vector3(position.x, position.y, 0f); // Vector2Int doesn't work with Instantiate, it wants a vector 3
 
+    // create the gem and spawn it on the board
     Gem gem = Instantiate(gemToSpawn, compatiblePos, Quaternion.identity);
-    gem.transform.parent = this.transform; // make it child of Board.
+    gem.transform.parent = transform; // make it child of Board.
     gem.name = $"Gem - {position.x}, {position.y}";
+
+    allGems[position.x, position.y] = gem; // store the new gem in the allGems array.
+
+    gem.SetupGem(position, this); // let the gem know what is it's position and board
   }
 }
