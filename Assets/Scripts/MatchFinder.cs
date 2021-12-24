@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; // extra stuff that lists can do
 
 public class MatchFinder : MonoBehaviour
 {
   private Board board;
+  public List<Gem> currentMatches = new List<Gem>(); // a list is very easy to manipulate compared to an array.
 
   private void Awake()
   {
     board = FindObjectOfType<Board>();
   }
 
-
   public void FindAllMatches()
   {
+    // currentMatches.Clear();
+
     for (int x = 0; x < board.width; x++)
     {
       for (int y = 0; y < board.height; y++)
@@ -26,6 +29,14 @@ public class MatchFinder : MonoBehaviour
           CheckMatchesVertical(x, y, currentGem); // up and down
         }
       }
+    }
+
+    // if there are any matches
+    if (currentMatches.Count > 0)
+    {
+      // Distinct comes from System.Linq.
+
+      currentMatches = currentMatches.Distinct().ToList();   // Distinct: generates another list that only holds unique objectss
     }
   }
   private void CheckMatchesHorizontal(int x, int y, Gem currentGem)
@@ -66,6 +77,11 @@ public class MatchFinder : MonoBehaviour
       currentGem.isMatched = true;
       gem2.isMatched = true;
       gem3.isMatched = true;
+
+      // add the matching gems to the list
+      currentMatches.Add(currentGem);
+      currentMatches.Add(gem2);
+      currentMatches.Add(gem3);
     }
   }
 }
