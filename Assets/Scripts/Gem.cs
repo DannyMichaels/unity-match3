@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gem : MonoBehaviour
 {
-  // [HideInInspector] // hides it from inspector (not need to see)
+  [HideInInspector] // hides it from inspector (not need to see)
   public Vector2Int posIndex; // position index.
   [HideInInspector]
   public Board board;
@@ -16,6 +16,11 @@ public class Gem : MonoBehaviour
   private float swipeAngle = 0;
 
   private Gem otherGem;
+
+  public enum GemType { blue, green, red, yellow, purple };
+  public GemType type;
+
+  public bool isMatched;
 
   // Start is called before the first frame update
   void Start()

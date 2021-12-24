@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7012422475657555264, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.74871796
+      objectReference: {fileID: 0}
+    - target: {fileID: -7012422475657555264, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.9358974
+      objectReference: {fileID: 0}
     - target: {fileID: 195340227240280332, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -55,9 +63,13 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d184668e3ca69674d8a20a99d14eb1d2, type: 3}
+    - target: {fileID: 195340227240280335, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 195340227240280338, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
       propertyPath: m_Name
-      value: Gem - Green
+      value: Gem - Green Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
