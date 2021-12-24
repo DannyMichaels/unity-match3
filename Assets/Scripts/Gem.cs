@@ -26,8 +26,7 @@ public class Gem : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-
-
+    HandleGemMove();
     HandleMousePressed();
   }
 
@@ -64,10 +63,9 @@ public class Gem : MonoBehaviour
     swipeAngle = swipeAngle * 180 / Mathf.PI;
     Debug.Log(swipeAngle);
 
-
+    // if the distance between the 2 positions is big enough
     if (Vector3.Distance(firstTouchPosition, finalTouchPosition) > .5f)
     {
-
       MovePieces();
     }
   }
@@ -126,4 +124,18 @@ public class Gem : MonoBehaviour
     board.allGems[otherGem.posIndex.x, otherGem.posIndex.y] = otherGem;
   }
 
+  private void HandleGemMove()
+  {
+    if (Vector2.Distance(transform.position, posIndex) > .01f)
+    {
+      // https://docs.unity3d.com/ScriptReference/Vector2.Lerp.html
+      // gem location and the speed of which it will be moving towards it
+      transform.position = Vector2.Lerp(transform.position, posIndex, board.gemSpeed * Time.deltaTime);
+    }
+    else
+    {
+      transform.position = new Vector3(posIndex.x, posIndex.y, 0f);
+      board.allGems[posIndex.x, posIndex.y] = this;
+    }
+  }
 }

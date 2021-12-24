@@ -13,6 +13,9 @@ public class Board : MonoBehaviour
   // https://stackoverflow.com/questions/12567329/multidimensional-array-vs
   public Gem[,] allGems; // stored gems data on the board (2D Array), stores an X and a Y value for each gem.
 
+  public float gemSpeed;
+
+
   // Start is called before the first frame update
   void Start()
   {
