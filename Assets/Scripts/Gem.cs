@@ -24,6 +24,8 @@ public class Gem : MonoBehaviour
 
   private Vector2Int previousPos;
 
+  public GameObject destroyEffect; // the particle effects that play when gem is destroyed.
+
   // Start is called before the first frame update
   void Start()
   {
