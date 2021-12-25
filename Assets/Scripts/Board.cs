@@ -196,5 +196,36 @@ public class Board : MonoBehaviour
         }
       }
     }
+
+    CheckMisplacedGems();
+  }
+
+  // EDGECASE: find any gems that haven't been assigned to board and just remove them.
+  private void CheckMisplacedGems()
+  {
+    List<Gem> foundGems = new List<Gem>();
+
+    // find all gems in the scene and add them to the list
+    foundGems.AddRange(FindObjectsOfType<Gem>());
+
+    for (int x = 0; x < width; x++)
+    {
+      for (int y = 0; y < height; y++)
+      {
+        // foundGems should be all the gems that aren't included in the board. So if it's in the board (allGems). remove it
+        if (foundGems.Contains(allGems[x, y]))
+        {
+          foundGems.Remove(allGems[x, y]); // remove it from foundGems because it's on the board
+        }
+      }
+
+    }
+
+    // after the loops we will be left with only gems that haven't been assigned to the board
+    foreach (Gem gem in foundGems)
+    {
+      // destroy all misplaced gems
+      Destroy(gem.gameObject);
+    }
   }
 }
