@@ -17,7 +17,7 @@ public class Gem : MonoBehaviour
 
   private Gem otherGem;
 
-  public enum GemType { blue, green, red, yellow, purple };
+  public enum GemType { blue, green, red, yellow, purple, bomb };
   public GemType type;
 
   public bool isMatched;
@@ -25,6 +25,8 @@ public class Gem : MonoBehaviour
   private Vector2Int previousPos;
 
   public GameObject destroyEffect; // the particle effects that play when gem is destroyed.
+
+  public int blastSize = 2; // bomb blast size.
 
   // Start is called before the first frame update
   void Start()

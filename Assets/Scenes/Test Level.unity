@@ -247,6 +247,8 @@ MonoBehaviour:
   gemSpeed: 8
   matchFinder: {fileID: 0}
   currentState: 1
+  bomb: {fileID: 7495084465901663486, guid: a9e7342bf39b42d46b376b1e99fb885c, type: 3}
+  bombChance: 2
 --- !u!4 &774911846
 Transform:
   m_ObjectHideFlags: 0
