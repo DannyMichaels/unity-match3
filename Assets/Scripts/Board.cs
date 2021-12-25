@@ -65,8 +65,8 @@ public class Board : MonoBehaviour
 
   // Vector2Int: always whole numbers
   private void SpawnGem(Vector2Int position, Gem gemToSpawn)
-  {
-    Vector3 compatiblePos = new Vector3(position.x, position.y, 0f); // Vector2Int doesn't work with Instantiate, it wants a vector 3
+  {                                                 // add height of board so gem "slides" in when spawned
+    Vector3 compatiblePos = new Vector3(position.x, position.y + height, 0f); // Vector2Int doesn't work with Instantiate, it wants a vector 3
 
     // create the gem and spawn it on the board
     Gem gem = Instantiate(gemToSpawn, compatiblePos, Quaternion.identity);

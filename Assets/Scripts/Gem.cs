@@ -134,6 +134,9 @@ public class Gem : MonoBehaviour
     StartCoroutine(CheckMoveCo());
   }
 
+  // @method HandleGemMove
+  // @desc constantly move torwards it's position in the stored allGems array if there is distance between it's actual position and posIndex.
+  // if there is no distance, set the position to where it is.
   private void HandleGemMove()
   {
     if (Vector2.Distance(transform.position, posIndex) > .01f)
