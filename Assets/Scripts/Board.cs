@@ -49,6 +49,15 @@ public class Board : MonoBehaviour
         bgTile.name = $"BG Tile - {x}, {y}";
 
         int randomGemIndex = Random.Range(0, gems.Length); // get a random gem variant from the gems array
+
+        int iterations = 0;
+        // if there is a match, pick a new random gem index (don't start game with matches)
+        while (MatchesAt(new Vector2Int(x, y), gems[randomGemIndex]) && iterations < 100)
+        {
+          randomGemIndex = Random.Range(0, gems.Length); // get a random gem variant from the gems array
+          iterations++; // stop infinite looping (when only 2 gem variants there will always be a match)
+        }
+
         SpawnGem(new Vector2Int(x, y), gems[randomGemIndex]);
       }
     }
@@ -67,5 +76,29 @@ public class Board : MonoBehaviour
     allGems[position.x, position.y] = gem; // store the new gem in the allGems array.
 
     gem.SetupGem(position, this); // let the gem know what is it's position and board
+  }
+
+  bool MatchesAt(Vector2Int posToCheck, Gem gemToCheck)
+  {
+    // check to left as long as it's greater than 1
+    if (posToCheck.x > 1)
+    {
+      if (allGems[posToCheck.x - 1, posToCheck.y].type == gemToCheck.type && allGems[posToCheck.x - 2, posToCheck.y].type == gemToCheck.type)
+      {
+        return true;
+      }
+    }
+
+
+    // check below
+    if (posToCheck.y > 1)
+    {
+      if (allGems[posToCheck.x, posToCheck.y - 1].type == gemToCheck.type && allGems[posToCheck.x, posToCheck.y - 2].type == gemToCheck.type)
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
