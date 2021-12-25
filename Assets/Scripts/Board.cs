@@ -156,5 +156,45 @@ public class Board : MonoBehaviour
 
       nullCounter = 0;
     }
+
+    StartCoroutine(FillBoardCo());
+  }
+
+
+  // @method FillBoardCo
+  // @desc fill the board with gems after matches have been destroyed and gems have fell, then check for any new matches.
+  private IEnumerator FillBoardCo()
+  {
+    yield return new WaitForSeconds(.5f);
+    RefillBoard();
+
+    yield return new WaitForSeconds(.5f);
+
+    // after board has been refilled, check for any new matches to destroy (cascading effect that is so loved in Match 3 games)
+    matchFinder.FindAllMatches();
+    if (matchFinder.currentMatches.Count > 0)
+    {
+      yield return new WaitForSeconds(1.5f);
+      DestroyMatches();
+    }
+  }
+
+  // @method RefillBoard
+  // @desc: gets called in FillBoardCo after matches have been destroyed
+  private void RefillBoard()
+  {
+    for (int x = 0; x < width; x++)
+    {
+      for (int y = 0; y < height; y++)
+      {
+        // only spawn gem at that spot if it's null
+        if (allGems[x, y] == null)
+        {
+          int gemVariantIdx = Random.Range(0, gems.Length);
+
+          SpawnGem(new Vector2Int(x, y), gems[gemVariantIdx]);
+        }
+      }
+    }
   }
 }
