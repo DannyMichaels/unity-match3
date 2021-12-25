@@ -147,6 +147,8 @@ public class Board : MonoBehaviour
     {
       if (matchFinder.currentMatches[i] != null)
       {
+        ScoreCheck(matchFinder.currentMatches[i]);
+
         DestroyMatchedGemAt(matchFinder.currentMatches[i].posIndex);
       }
     }
@@ -191,6 +193,7 @@ public class Board : MonoBehaviour
   private IEnumerator FillBoardCo()
   {
     yield return new WaitForSeconds(.5f);
+
     RefillBoard();
 
     yield return new WaitForSeconds(.5f);
@@ -302,5 +305,10 @@ public class Board : MonoBehaviour
 
       StartCoroutine(FillBoardCo());
     }
+  }
+
+  public void ScoreCheck(Gem gemToCheck)
+  {
+    roundManager.currentScore += gemToCheck.scoreValue;
   }
 }

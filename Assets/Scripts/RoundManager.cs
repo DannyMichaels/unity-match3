@@ -10,6 +10,10 @@ public class RoundManager : MonoBehaviour
   private bool endingRound = false;
   private Board board;
 
+  public int currentScore;
+  public float displayScore;
+  public float scoreSpeed = 5f;
+
   void Awake()
   {
     uiManager = FindObjectOfType<UIManager>();
@@ -20,6 +24,14 @@ public class RoundManager : MonoBehaviour
   void Update()
   {
     SetRoundTime();
+
+    if (endingRound && board.currentState == Board.BoardState.move)
+    {
+      WinCheck();
+      endingRound = false;
+    }
+
+    SetUIScore();
   }
 
 
@@ -37,13 +49,15 @@ public class RoundManager : MonoBehaviour
       }
     }
 
-    if (endingRound && board.currentState == Board.BoardState.move)
-    {
-      WinCheck();
-      endingRound = false;
-    }
 
     uiManager.timeText.text = roundTime.ToString("0.0") + "s"; // set text
+  }
+
+  private void SetUIScore()
+  {
+    displayScore = Mathf.Lerp(displayScore, currentScore, scoreSpeed * Time.deltaTime); // lerp from current score to new score. instead of instantly going to new score
+
+    uiManager.scoreText.text = displayScore.ToString("0"); // no decimal places, whole number
   }
 
   private void WinCheck()

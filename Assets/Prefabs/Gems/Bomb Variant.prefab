@@ -68,6 +68,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 195340227240280335, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
+      propertyPath: scoreValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 195340227240280335, guid: 03190b51edebbd244a3d671691ccc68d, type: 3}
       propertyPath: destroyEffect
       value: 
       objectReference: {fileID: 6914997074024545021, guid: 6fc45da3773a4014d93507547363328a, type: 3}
