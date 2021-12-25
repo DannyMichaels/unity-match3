@@ -38,6 +38,11 @@ public class Board : MonoBehaviour
   void Update()
   {
     // matchFinder.FindAllMatches();
+
+    if (Input.GetKeyDown(KeyCode.S))
+    {
+      ShuffleBoard();
+    }
   }
 
   private void Setup()
@@ -113,7 +118,6 @@ public class Board : MonoBehaviour
 
     return false;
   }
-
 
   // specifically destroy individual gem
   private void DestroyMatchedGemAt(Vector2Int pos)
@@ -248,6 +252,51 @@ public class Board : MonoBehaviour
     {
       // destroy all misplaced gems
       Destroy(gem.gameObject);
+    }
+  }
+
+  public void ShuffleBoard()
+  {
+    /* Get all the gems that currently exist on the board and add them to a list. 
+      loop through all the available spaces and place the gems into place
+
+      try to make sure there are no matches    
+    */
+
+    if (currentState != BoardState.wait)
+    {
+      currentState = BoardState.wait;
+      List<Gem> gemsFromBoard = new List<Gem>();
+
+      for (int x = 0; x < width; x++)
+      {
+        for (int y = 0; y < height; y++)
+        {
+          gemsFromBoard.Add(allGems[x, y]);
+          allGems[x, y] = null;
+        }
+      }
+
+      for (int x = 0; x < width; x++)
+      {
+        for (int y = 0; y < height; y++)
+        {
+          int randomGemIdx = Random.Range(0, gemsFromBoard.Count);
+          int iterations = 0;
+
+          while (MatchesAt(new Vector2Int(x, y), gemsFromBoard[randomGemIdx]) && iterations < 100 && gemsFromBoard.Count > 1)
+          {
+            randomGemIdx = Random.Range(0, gemsFromBoard.Count);
+            iterations++;
+          }
+
+          gemsFromBoard[randomGemIdx].SetupGem(new Vector2Int(x, y), this);
+          allGems[x, y] = gemsFromBoard[randomGemIdx];
+          gemsFromBoard.RemoveAt(randomGemIdx);
+        }
+      }
+
+      StartCoroutine(FillBoardCo());
     }
   }
 }
