@@ -27,6 +27,9 @@ public class Board : MonoBehaviour
   [HideInInspector]
   public RoundManager roundManager;
 
+  private float bonusMulti;
+  public float bonusAmount = .5f;
+
   void Awake()
   {
     matchFinder = FindObjectOfType<MatchFinder>();
@@ -202,6 +205,8 @@ public class Board : MonoBehaviour
     matchFinder.FindAllMatches();
     if (matchFinder.currentMatches.Count > 0)
     {
+      bonusMulti++;
+
       yield return new WaitForSeconds(.5f);
       DestroyMatches();
     }
@@ -209,6 +214,8 @@ public class Board : MonoBehaviour
     {
       yield return new WaitForSeconds(.5f);
       currentState = BoardState.move;
+
+      bonusMulti = 0f;
     }
   }
 
@@ -310,5 +317,11 @@ public class Board : MonoBehaviour
   public void ScoreCheck(Gem gemToCheck)
   {
     roundManager.currentScore += gemToCheck.scoreValue;
+
+    if (bonusMulti > 0)
+    {
+      float bonusToAdd = gemToCheck.scoreValue * bonusMulti * bonusAmount;
+      roundManager.currentScore += Mathf.RoundToInt(bonusToAdd);
+    }
   }
 }
