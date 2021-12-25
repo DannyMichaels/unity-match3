@@ -108,14 +108,16 @@ public class Board : MonoBehaviour
   // specifically destroy individual gem
   private void DestroyMatchedGemAt(Vector2Int pos)
   {
-    if (allGems[pos.x, pos.y] != null)
-    {
-      if (allGems[pos.x, pos.y].isMatched)
-      {
-        Instantiate(allGems[pos.x, pos.y].destroyEffect, new Vector2(pos.x, pos.y), Quaternion.identity); // create particle effects
+    Gem gemToDestroy = allGems[pos.x, pos.y];
 
-        Destroy(allGems[pos.x, pos.y].gameObject);
-        allGems[pos.x, pos.y] = null;
+    if (gemToDestroy != null)
+    {
+      if (gemToDestroy.isMatched)
+      {
+        Instantiate(gemToDestroy.destroyEffect, new Vector2(pos.x, pos.y), Quaternion.identity); // create particle effects
+
+        Destroy(gemToDestroy.gameObject);
+        allGems[pos.x, pos.y] = null; // make sure gemToDestroy is null (don't use the var because it won't mutate the array.)
       }
     }
   }
