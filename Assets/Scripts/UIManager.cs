@@ -6,6 +6,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
   public TMP_Text timeText, scoreText;
+  public GameObject roundOverScreen;
 
   // Start is called before the first frame update
   void Start()

@@ -24,9 +24,13 @@ public class Board : MonoBehaviour
   public Gem bomb;
   public float bombChance = 2f;
 
+  [HideInInspector]
+  public RoundManager roundManager;
+
   void Awake()
   {
     matchFinder = FindObjectOfType<MatchFinder>();
+    roundManager = FindObjectOfType<RoundManager>();
   }
 
   void Start()

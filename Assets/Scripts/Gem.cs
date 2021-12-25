@@ -51,6 +51,7 @@ public class Gem : MonoBehaviour
   private void OnMouseDown()
   {
     if (board.currentState == Board.BoardState.wait) return; // don't let player do anything if board is waiting
+    if (board.roundManager.roundTime <= 0) return; // if roundtime is less than or equal to 0 don't continue
 
     // convert the mouse position into a position in the world based on the camera that we have
     firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); // camera.main is a way to check and find the main camera in the scene
@@ -65,6 +66,7 @@ public class Gem : MonoBehaviour
       mousePressed = false;
 
       if (board.currentState == Board.BoardState.wait) return; // don't continue to do anything if board  state is waiting
+      if (board.roundManager.roundTime <= 0) return; // if roundtime is less than or equal to 0 don't continue
 
       finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
       CalculateAngle(); // calculate the angle that the swipe is happening in
