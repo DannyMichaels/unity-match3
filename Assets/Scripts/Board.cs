@@ -177,7 +177,7 @@ public class Board : MonoBehaviour
     matchFinder.FindAllMatches();
     if (matchFinder.currentMatches.Count > 0)
     {
-      yield return new WaitForSeconds(1.5f);
+      yield return new WaitForSeconds(.5f);
       DestroyMatches();
     }
     else
