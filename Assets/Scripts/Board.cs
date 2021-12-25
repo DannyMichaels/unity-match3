@@ -125,5 +125,36 @@ public class Board : MonoBehaviour
         DestroyMatchedGemAt(matchFinder.currentMatches[i].posIndex);
       }
     }
+
+    StartCoroutine(DecreaseRowCo());
+  }
+
+
+  // @method DecreaseRowCo
+  // @desc: make gems fall after matches have been destroyed
+  private IEnumerator DecreaseRowCo()
+  {
+    yield return new WaitForSeconds(.2f);
+
+    int nullCounter = 0;
+
+    for (int x = 0; x < width; x++)
+    {
+      for (int y = 0; y < height; y++)
+      {
+        if (allGems[x, y] == null)
+        {
+          nullCounter++;
+        }
+        else if (nullCounter > 0)
+        {
+          allGems[x, y].posIndex.y -= nullCounter;
+          allGems[x, y - nullCounter] = allGems[x, y];
+          allGems[x, y] = null;
+        }
+      }
+
+      nullCounter = 0;
+    }
   }
 }
