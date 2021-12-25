@@ -46,6 +46,8 @@ public class Gem : MonoBehaviour
   // need to add a box collider 2D for this to be clickable
   private void OnMouseDown()
   {
+    if (board.currentState == Board.BoardState.wait) return; // don't let player do anything if board is waiting
+
     // convert the mouse position into a position in the world based on the camera that we have
     firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); // camera.main is a way to check and find the main camera in the scene
     mousePressed = true;
@@ -57,6 +59,8 @@ public class Gem : MonoBehaviour
     if (mousePressed && Input.GetMouseButtonUp(0)) // ButtonUp: if we let go of left click
     {
       mousePressed = false;
+
+      if (board.currentState == Board.BoardState.wait) return; // don't continue to do anything if board  state is waiting
 
       finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
       CalculateAngle(); // calculate the angle that the swipe is happening in
@@ -154,6 +158,8 @@ public class Gem : MonoBehaviour
 
   public IEnumerator CheckMoveCo()
   {
+    board.currentState = Board.BoardState.wait; // don't allow player to move
+
     yield return new WaitForSeconds(.5f);
 
     board.matchFinder.FindAllMatches();
@@ -168,6 +174,10 @@ public class Gem : MonoBehaviour
         posIndex = previousPos;
 
         setBoardGemsPositions();
+
+        yield return new WaitForSeconds(.5f);
+
+        board.currentState = Board.BoardState.move; // allow player to move
       }
       else
       {

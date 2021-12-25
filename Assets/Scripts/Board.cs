@@ -18,6 +18,9 @@ public class Board : MonoBehaviour
   [HideInInspector]
   public MatchFinder matchFinder;
 
+  public enum BoardState { wait, move };
+  public BoardState currentState = BoardState.move;
+
   void Awake()
   {
     matchFinder = FindObjectOfType<MatchFinder>();
@@ -31,7 +34,7 @@ public class Board : MonoBehaviour
 
   void Update()
   {
-    matchFinder.FindAllMatches();
+    // matchFinder.FindAllMatches();
   }
 
   private void Setup()
@@ -176,6 +179,11 @@ public class Board : MonoBehaviour
     {
       yield return new WaitForSeconds(1.5f);
       DestroyMatches();
+    }
+    else
+    {
+      yield return new WaitForSeconds(.5f);
+      currentState = BoardState.move;
     }
   }
 

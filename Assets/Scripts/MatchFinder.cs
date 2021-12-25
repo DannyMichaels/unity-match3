@@ -15,7 +15,7 @@ public class MatchFinder : MonoBehaviour
 
   public void FindAllMatches()
   {
-    // currentMatches.Clear();
+    currentMatches.Clear(); // clear the list every time this is called because we want to make sure it's empty every-time it starts
 
     for (int x = 0; x < board.width; x++)
     {
