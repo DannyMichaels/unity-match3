@@ -68,7 +68,7 @@ public class Gem : MonoBehaviour
     // https://docs.unity3d.com/ScriptReference/Mathf.Atan2.html
     swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x);
     swipeAngle = swipeAngle * 180 / Mathf.PI;
-    Debug.Log(swipeAngle);
+    // Debug.Log(swipeAngle);
 
     // if the distance between the 2 positions is big enough
     if (Vector3.Distance(firstTouchPosition, finalTouchPosition) > .5f)
@@ -165,6 +165,11 @@ public class Gem : MonoBehaviour
         posIndex = previousPos;
 
         setBoardGemsPositions();
+      }
+      else
+      {
+        // if this gem is matched or the other gem is matched
+        board.DestroyMatches(); // that means there are matches, destroy the matches
       }
   }
 

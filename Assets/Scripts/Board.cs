@@ -100,4 +100,30 @@ public class Board : MonoBehaviour
 
     return false;
   }
+
+
+  // specifically destroy individual gem
+  private void DestroyMatchedGemAt(Vector2Int pos)
+  {
+    if (allGems[pos.x, pos.y] != null)
+    {
+      if (allGems[pos.x, pos.y].isMatched)
+      {
+        Destroy(allGems[pos.x, pos.y].gameObject);
+        allGems[pos.x, pos.y] = null;
+      }
+    }
+  }
+
+  // destroy any matches on the board
+  public void DestroyMatches()
+  {
+    for (int i = 0; i < matchFinder.currentMatches.Count; i++)
+    {
+      if (matchFinder.currentMatches[i] != null)
+      {
+        DestroyMatchedGemAt(matchFinder.currentMatches[i].posIndex);
+      }
+    }
+  }
 }
