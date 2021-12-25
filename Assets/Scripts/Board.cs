@@ -89,7 +89,6 @@ public class Board : MonoBehaviour
       }
     }
 
-
     // check below
     if (posToCheck.y > 1)
     {
