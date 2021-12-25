@@ -22,6 +22,8 @@ public class Gem : MonoBehaviour
 
   public bool isMatched;
 
+  private Vector2Int previousPos;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -77,6 +79,8 @@ public class Gem : MonoBehaviour
 
   private void MovePieces()
   {
+    previousPos = posIndex;
+
     bool isInBoundsX = posIndex.x < board.width - 1; // make sure we're not swiping outside of range
     bool isInBoundsY = posIndex.y < board.height - 1; // make sure we're not swiping outside of range
 
@@ -125,8 +129,9 @@ public class Gem : MonoBehaviour
       this.posIndex.x--;
     }
 
-    board.allGems[posIndex.x, posIndex.y] = this; // the one that is stored in this location is now this gem
-    board.allGems[otherGem.posIndex.x, otherGem.posIndex.y] = otherGem;
+    setBoardGemsPositions();
+
+    StartCoroutine(CheckMoveCo());
   }
 
   private void HandleGemMove()
@@ -143,4 +148,31 @@ public class Gem : MonoBehaviour
       board.allGems[posIndex.x, posIndex.y] = this;
     }
   }
+
+  public IEnumerator CheckMoveCo()
+  {
+    yield return new WaitForSeconds(.5f);
+
+    board.matchFinder.FindAllMatches();
+
+    if (otherGem != null)
+
+      // if player swapped but there is no match, go back to previous position
+      if (!isMatched && !otherGem.isMatched)
+      {
+        // if not matched then the other gem should go to where we currently are.
+        otherGem.posIndex = posIndex;
+        posIndex = previousPos;
+
+        setBoardGemsPositions();
+      }
+  }
+
+  // puts this and the other gem in the correct location in board all gems array.
+  private void setBoardGemsPositions()
+  {
+    board.allGems[posIndex.x, posIndex.y] = this;
+    board.allGems[otherGem.posIndex.x, otherGem.posIndex.y] = otherGem;
+  }
+
 }
