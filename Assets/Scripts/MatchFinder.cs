@@ -73,6 +73,8 @@ public class MatchFinder : MonoBehaviour
 
   private void CheckMatch3(Gem currentGem, Gem gem2, Gem gem3)
   {
+    if (currentGem.type == Gem.GemType.stone) return;
+
     if (gem2.type == currentGem.type && gem3.type == currentGem.type)
     {
       // they're all the same type, we found a match
