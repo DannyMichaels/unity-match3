@@ -30,15 +30,22 @@ public class Board : MonoBehaviour
   private float bonusMulti;
   public float bonusAmount = .5f;
 
+  private BoardLayout boardLayout;
+  private Gem[,] layoutStore;
+
   void Awake()
   {
     matchFinder = FindObjectOfType<MatchFinder>();
     roundManager = FindObjectOfType<RoundManager>();
+    boardLayout = GetComponent<BoardLayout>(); // if it can't find it it will just leave boardLayout as null
   }
 
   void Start()
   {
     allGems = new Gem[width, height];
+
+    layoutStore = new Gem[width, height];
+
     Setup();
   }
 
@@ -54,6 +61,11 @@ public class Board : MonoBehaviour
 
   private void Setup()
   {
+    if (boardLayout != null)
+    {
+      layoutStore = boardLayout.GetLayout();
+    }
+
     // create a x by y Board, example: 7x7 
     // note: Camera x should be board width divided by 2 (rounded down to nearest whole number), same with camera Y
     for (int x = 0; x < width; x++)
@@ -66,17 +78,24 @@ public class Board : MonoBehaviour
         bgTile.transform.parent = transform; // make it child of Board.
         bgTile.name = $"BG Tile - {x}, {y}";
 
-        int randomGemIndex = Random.Range(0, gems.Length); // get a random gem variant from the gems array
-
-        int iterations = 0;
-        // if there is a match, pick a new random gem index (don't start game with matches)
-        while (MatchesAt(new Vector2Int(x, y), gems[randomGemIndex]) && iterations < 100)
+        if (layoutStore[x, y] != null)
         {
-          randomGemIndex = Random.Range(0, gems.Length); // get a random gem variant from the gems array
-          iterations++; // stop infinite looping (when only 2 gem variants there will always be a match)
+          SpawnGem(new Vector2Int(x, y), layoutStore[x, y]);
         }
+        else
+        {
+          int randomGemIndex = Random.Range(0, gems.Length); // get a random gem variant from the gems array
 
-        SpawnGem(new Vector2Int(x, y), gems[randomGemIndex]);
+          int iterations = 0;
+          // if there is a match, pick a new random gem index (don't start game with matches)
+          while (MatchesAt(new Vector2Int(x, y), gems[randomGemIndex]) && iterations < 100)
+          {
+            randomGemIndex = Random.Range(0, gems.Length); // get a random gem variant from the gems array
+            iterations++; // stop infinite looping (when only 2 gem variants there will always be a match)
+          }
+
+          SpawnGem(new Vector2Int(x, y), gems[randomGemIndex]);
+        }
       }
     }
   }
