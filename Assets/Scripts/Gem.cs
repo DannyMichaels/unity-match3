@@ -141,7 +141,7 @@ public class Gem : MonoBehaviour
       this.posIndex.x--;
     }
 
-    setBoardGemsPositions();
+    SetBoardGemsPositions();
 
     StartCoroutine(CheckMoveCo());
   }
@@ -181,7 +181,7 @@ public class Gem : MonoBehaviour
         otherGem.posIndex = posIndex;
         posIndex = previousPos;
 
-        setBoardGemsPositions();
+        SetBoardGemsPositions();
 
         yield return new WaitForSeconds(.5f);
 
@@ -195,7 +195,7 @@ public class Gem : MonoBehaviour
   }
 
   // puts this and the other gem in the correct location in board all gems array.
-  private void setBoardGemsPositions()
+  private void SetBoardGemsPositions()
   {
     board.allGems[posIndex.x, posIndex.y] = this;
     board.allGems[otherGem.posIndex.x, otherGem.posIndex.y] = otherGem;
