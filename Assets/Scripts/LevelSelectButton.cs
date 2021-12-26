@@ -12,7 +12,7 @@ public class LevelSelectButton : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-
+    HandleShowStars();
   }
 
   // Update is called once per frame
@@ -24,5 +24,27 @@ public class LevelSelectButton : MonoBehaviour
   public void LoadLevel()
   {
     SceneManager.LoadScene(levelToLoad);
+  }
+
+  private void HandleShowStars()
+  {
+    star1.SetActive(false);
+    star2.SetActive(false);
+    star3.SetActive(false);
+
+    if (PlayerPrefs.HasKey(levelToLoad + "_Star1"))
+    {
+      star1.SetActive(true);
+    }
+
+    if (PlayerPrefs.HasKey(levelToLoad + "_Star2"))
+    {
+      star2.SetActive(true);
+    }
+
+    if (PlayerPrefs.HasKey(levelToLoad + "_Star3"))
+    {
+      star2.SetActive(true);
+    }
   }
 }
