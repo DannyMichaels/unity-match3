@@ -154,6 +154,8 @@ public class Board : MonoBehaviour
     {
       if (gemToDestroy.isMatched)
       {
+        gemToDestroy.PlayDestroyedSound();
+
         Instantiate(gemToDestroy.destroyEffect, new Vector2(pos.x, pos.y), Quaternion.identity); // create particle effects
 
         Destroy(gemToDestroy.gameObject);

@@ -201,4 +201,20 @@ public class Gem : MonoBehaviour
     board.allGems[otherGem.posIndex.x, otherGem.posIndex.y] = otherGem;
   }
 
+
+  public void PlayDestroyedSound()
+  {
+    if (this.type == Gem.GemType.bomb)
+    {
+      SFXManager.instance.PlayExplode();
+    }
+    else if (this.type == Gem.GemType.stone)
+    {
+      SFXManager.instance.PlayStoneBreak();
+    }
+    else
+    {
+      SFXManager.instance.PlayGemBreak();
+    }
+  }
 }
