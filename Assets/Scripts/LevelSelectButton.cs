@@ -44,7 +44,7 @@ public class LevelSelectButton : MonoBehaviour
 
     if (PlayerPrefs.HasKey(levelToLoad + "_Star3"))
     {
-      star2.SetActive(true);
+      star3.SetActive(true);
     }
   }
 }
