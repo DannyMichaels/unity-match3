@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // for importing the button
 
 public class UIManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class UIManager : MonoBehaviour
 
   public GameObject pauseScreen;
 
+  public Button shuffleButton;
+
   private void Awake()
   {
     theBoard = FindObjectOfType<Board>();
@@ -28,13 +31,14 @@ public class UIManager : MonoBehaviour
     winStars3.SetActive(false);
   }
 
-  // Update is called once per frame
   void Update()
   {
     if (Input.GetKeyDown(KeyCode.Escape))
     {
       PauseUnpause();
     }
+
+    HandleDisableShuffleButton();
   }
 
   public void PauseUnpause()
@@ -72,5 +76,18 @@ public class UIManager : MonoBehaviour
   {
     string currentScene = SceneManager.GetActiveScene().name;
     SceneManager.LoadScene(currentScene);
+  }
+
+  private void HandleDisableShuffleButton()
+  {
+    // https://answers.unity.com/questions/1225741/disable-ui-button.html
+    if (theBoard.currentState == Board.BoardState.wait)
+    {
+      shuffleButton.interactable = false;
+    }
+    else
+    {
+      shuffleButton.interactable = true;
+    }
   }
 }
